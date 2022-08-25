@@ -17,13 +17,17 @@ jobs:
         with:
           node-version: 16.16.0
           cache: npm
+      - uses: Generate Environment Variables File for Production
+        run: echo "REACT_APP_KAKAO_KEY = 7e3688689c3e6260e25ef3e5ffd0c87c" >> .env
       - run: npm ci
       - run: npm test
       - run: npm run build
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
+          # github_token: ${{ secrets.GITHUB_TOKEN }}
+          # kakao API KEY Secret token
+          github_token: ${{ secrets.GITHUB_TOKEN } - token$({ REACT_APP_KAKAO_KEY })}
           publish_dir: ./build
 
  
